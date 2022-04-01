@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Мар 30 2022 г., 13:03
+-- Время создания: Апр 01 2022 г., 14:09
 -- Версия сервера: 10.4.22-MariaDB
 -- Версия PHP: 8.1.1
 
@@ -24,131 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `posts`
+-- Структура таблицы `users`
 --
 
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `topic_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `sections`
---
-
-CREATE TABLE `sections` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Структура таблицы `subsections`
+-- Дамп данных таблицы `users`
 --
 
-CREATE TABLE `subsections` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `section_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `topics`
---
-
-CREATE TABLE `topics` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `subsection_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `token`, `created_at`, `updated_at`) VALUES
+(1, 'test', 'test3@gmail.com', NULL, '$2y$10$xPQwBtEos7zdGiDV81sbfesTyarc72ZNgv/6t8Hk6JYpI2l2wqHeC', NULL, '7gw7VrwtuNSCcrIV5hni7bq878HcAnEHHi84ExhvK1jPVSYmsceX65JTxVAj22APFlrsJZkzBibrWb5zsO91FHaNUJ7yrgc', '2022-03-30 05:55:50', '2022-04-01 04:19:03'),
+(2, 'test', 'test4@gmail.com', NULL, '$2y$10$Ya1ab.ck8A.zCBmluzSmNO8g3gQojkDFLjc5Tej.MGma44wAKE37O', NULL, '', '2022-04-01 03:45:08', '2022-04-01 05:08:03');
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
--- Индексы таблицы `posts`
+-- Индексы таблицы `users`
 --
-ALTER TABLE `posts`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `topic_id` (`topic_id`);
-
---
--- Индексы таблицы `sections`
---
-ALTER TABLE `sections`
-  ADD PRIMARY KEY (`id`);
-
---
--- Индексы таблицы `subsections`
---
-ALTER TABLE `subsections`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `section_id` (`section_id`);
-
---
--- Индексы таблицы `topics`
---
-ALTER TABLE `topics`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `subsection_id` (`subsection_id`);
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `posts`
+-- AUTO_INCREMENT для таблицы `users`
 --
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `sections`
---
-ALTER TABLE `sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `subsections`
---
-ALTER TABLE `subsections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `topics`
---
-ALTER TABLE `topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `subsections`
---
-ALTER TABLE `subsections`
-  ADD CONSTRAINT `subsections_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `topics`
---
-ALTER TABLE `topics`
-  ADD CONSTRAINT `topics_ibfk_1` FOREIGN KEY (`subsection_id`) REFERENCES `subsections` (`id`);
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
