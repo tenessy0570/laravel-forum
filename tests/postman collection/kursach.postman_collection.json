@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "f2118ff6-94c6-4a9b-92c0-5d91015c50c5",
+		"name": "kursach",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sections list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/sections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"sections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get section",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/section/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"section",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "section subsections list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/section/1/subsections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"section",
+						"1",
+						"subsections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subsections list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/subsections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"subsections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subsection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/subsection/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"subsection",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subsection topics list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/subsection/2/topics",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"subsection",
+						"2",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topics list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topics",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get topic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topic/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topic posts list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topic/1/posts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic",
+						"1",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "posts list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/posts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get post user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/3/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"3",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get post topic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/1/topic",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"1",
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"topic_id\": 1,\r\n    \"name\": \"LOL\",\r\n    \"content\": \"CONTENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ekjMmWdIc43NJcONIgUmxfbPKWYo0vfsSOD3u54d02OgeTY2ACzkEKh3dcX2hG3Ai1tN6lEwYcGqM9AsWlh3zv3DmtZqDsZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"QQWEQEWew123321213QEWQ\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post/10",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "JW7FL6Zq5Yt0uhGSbNcgyzEPv04SJMlLwKO8OVzkZpNx9BSpN8OedDEwVBcEQyQUgpQ6OCUGPoKCRuaNGKmsemIyVLqJMfA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"topic_id\": 1,\r\n    \"name\": \"LOL\",\r\n    \"content\": \"CONTENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post/62",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"62"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ekjMmWdIc43NJcONIgUmxfbPKWYo0vfsSOD3u54d02OgeTY2ACzkEKh3dcX2hG3Ai1tN6lEwYcGqM9AsWlh3zv3DmtZqDsZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test3@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
