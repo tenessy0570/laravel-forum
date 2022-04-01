@@ -39,8 +39,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth.api'], function() {
-    Route::post('/post', [PostController::class, 'create'])->middleware('auth.api');
-    Route::patch('/post/{id}', [PostController::class, 'edit'])->middleware('auth.api');
-    Route::delete('/post/{id}', [PostController::class, 'delete'])->middleware('auth.api');
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth.api');
+    Route::post('/post', [PostController::class, 'create']);
+    Route::patch('/post/{id}', [PostController::class, 'edit']);
+    Route::delete('/post/{id}', [PostController::class, 'delete']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
