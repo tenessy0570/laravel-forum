@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use App\Models\Subsection;
 use Illuminate\Http\Request;
@@ -37,7 +38,24 @@ class SubsectionController extends Controller
      */
     public function show($id)
     {
-        return Subsection::find($id)->first();
+        $subsection = Subsection::find($id);
+
+        if (!$subsection) {
+            return Handler::raise404();
+        }
+
+        return $subsection;
+    }
+
+    public function showTopics($id)
+    {
+        $subsection = Subsection::find($id);
+
+        if (!$subsection) {
+            return Handler::raise404();
+        }
+
+        return $subsection->topics();
     }
 
     /**

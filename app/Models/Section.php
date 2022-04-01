@@ -15,4 +15,9 @@ class Section extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function subsections()
+    {
+        return $this->hasMany('App\Models\Subsection')->get();
+    }
 }

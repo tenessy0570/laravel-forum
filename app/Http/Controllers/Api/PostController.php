@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -24,9 +26,62 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'topic_id' => 'required',
+            'name' => 'required',
+            'content' => 'required'
+        ]);
+
+        $post = new Post;
+        $post->topic_id = $request->topic_id;
+        $post->name = $request->name;
+        $post->content = $request->content;
+        $post->user_id = $request->user->id;
+        $post->save();
+
+        return response()->json($post, 201);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required'
+        ]);
+
+        $post = Post::find($id);
+
+        if (!$post) {
+            return Handler::raise404();
+        }
+
+        if ($post->user_id !== $request->user->id) {
+            return Handler::raise403();
+        }
+
+        $post->content = $request->content;
+        $post->save();
+
+        return response()->json($post, 200);
+    }
+
+    public function delete($id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return Handler::raise404();
+        }
+
+        if ($post->user_id !== request()->user->id) {
+            return Handler::raise403();
+        }
+        
+        $post->delete();
+        return response()->json([
+            'success' => 'true'
+        ], 200);
     }
 
     /**
@@ -37,7 +92,36 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return Post::find($id)->first();
+        $post = Post::find($id); 
+
+        if (!$post) {
+            return Handler::raise404();
+        }
+
+        return $post;
+    }
+
+    public function showUser($id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return Handler::raise404();
+        }
+
+        return $post->user();
+    }
+
+
+    public function showTopic($id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return Handler::raise404();
+        }
+
+        return $post->topic();
     }
 
     /**

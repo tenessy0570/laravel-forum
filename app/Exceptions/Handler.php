@@ -38,4 +38,18 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public static function raise404()
+    {
+        return response()->json([
+            'error' => 'Not found'
+        ], 404);
+    }
+
+    public static function raise403()
+    {
+        return response()->json([
+            'error' => 'Forbidden for you'
+        ], 403);
+    }
 }

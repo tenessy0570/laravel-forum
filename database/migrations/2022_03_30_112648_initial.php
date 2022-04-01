@@ -37,6 +37,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('topic_id')->constrained();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained();
         });
     }
 

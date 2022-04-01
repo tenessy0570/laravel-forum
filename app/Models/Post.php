@@ -16,4 +16,14 @@ class Post extends Model
         'content',
         'topic_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User')->select(array('id', 'name', 'email'))->get();
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo('App\Models\Topic')->get();
+    }
 }

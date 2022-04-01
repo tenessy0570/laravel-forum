@@ -15,4 +15,14 @@ class Topic extends Model
         'name',
         'subsection_id'
     ];
+
+    public function subsection()
+    {
+        return $this->belongsTo('App\Models\Subsection')->get();
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post')->get();
+    }
 }

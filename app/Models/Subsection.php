@@ -16,4 +16,14 @@ class Subsection extends Model
         'name',
         'section_id'
     ];
+
+    public function section()
+    {
+        return $this->belongsTo('App\Models\Section')->get();
+    }
+
+    public function topics()
+    {
+        return $this->hasMany('App\Models\Topic')->get();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,11 +16,16 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|unique:users',
+            'email' => 'required|string',
             'password' => 'required|string'
         ]);
 
-        $token = Str::random(95);
+        if (User::where('email', $request->email)->first()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'email is already used'
+            ], 401);
+        }
 
         $user = new User([
             'name' => $request->name,
@@ -53,9 +59,24 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        $user->generateToken();
+
+
         return response()->json([
             'success' => true,
             'token' => $user->token
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user;
+
+        $user->token = '';
+        $user->save();
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

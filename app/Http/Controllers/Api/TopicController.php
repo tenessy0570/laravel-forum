@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -37,7 +38,24 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        return Topic::find($id)->first();
+        $topic = Topic::find($id);
+
+        if (!$topic) {
+            return Handler::raise404();
+        }
+
+        return $topic;
+    }
+
+    public function showPosts($id)
+    {
+        $topic = Topic::find($id);
+
+        if (!$topic) {
+            return Handler::raise404();
+        }
+
+        return $topic->posts();
     }
 
     /**

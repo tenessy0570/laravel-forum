@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -37,7 +38,30 @@ class SectionController extends Controller
      */
     public function show($id)
     {
-        return Section::find($id)->first();
+        $section = Section::find($id);
+
+        if (!$section) {
+            return Handler::raise404();
+        }
+
+        return $section;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSubsections($id)
+    {
+        $section = Section::find($id);
+
+        if (!$section) {
+            return Handler::raise404();
+        }
+
+        return $section->subsections();
     }
 
     /**
