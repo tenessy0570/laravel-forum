@@ -6,6 +6,7 @@ use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -33,6 +34,12 @@ class PostController extends Controller
             'name' => 'required',
             'content' => 'required'
         ]);
+
+        $topic = Topic::find($request->topic_id);
+        if (!$topic) {
+            return Handler::raise404_error('topic with this id doesn\'t exist');
+        }
+
 
         $post = new Post;
         $post->topic_id = $request->topic_id;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
+use App\Models\Subsection;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 
@@ -56,6 +57,27 @@ class TopicController extends Controller
         }
 
         return $topic->posts();
+    }
+
+    public function create(Request $request)
+    {
+        $request->validate([
+            'subsection_id' => 'required',
+            'name' => 'required'
+        ]);
+
+        $subsection = Subsection::find($request->subsection_id);
+        if (!$subsection) {
+            return Handler::raise404_error('subsection with this id doesn\'t exist');
+        }
+
+        $topic = new Topic;
+        $topic->subsection_id = $request->subsection_id;
+        $topic->name = $request->name;
+        $topic->user_id = $request->user->id;
+        $topic->save();
+
+        return response()->json($topic, 201);
     }
 
     /**

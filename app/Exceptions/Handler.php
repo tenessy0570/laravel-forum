@@ -52,4 +52,11 @@ class Handler extends ExceptionHandler
             'error' => 'Forbidden for you'
         ], 403);
     }
+
+    public static function raise404_error($message)
+    {
+        return response()->json([
+            'error' => $message
+        ], 404);
+    }
 }

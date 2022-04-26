@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Post')->get();
     }
 
+    public function topics()
+    {
+        return $this->hasMany('App\Models\Topic')->get();
+    }
+
     public function generateToken()
     {
         $this->token = Str::random(95);

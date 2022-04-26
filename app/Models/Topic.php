@@ -13,12 +13,18 @@ class Topic extends Model
     
     protected $fillable = [
         'name',
-        'subsection_id'
+        'subsection_id',
+        'user_id'
     ];
 
     public function subsection()
     {
         return $this->belongsTo('App\Models\Subsection')->get();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User')->get();
     }
 
     public function posts()
