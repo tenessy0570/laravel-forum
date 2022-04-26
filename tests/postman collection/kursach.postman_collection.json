@@ -6,7 +6,59 @@
 	},
 	"item": [
 		{
-			"name": "sections list",
+			"name": "[NOAUTH] register success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] login success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] sections list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -23,7 +75,7 @@
 			"response": []
 		},
 		{
-			"name": "get section",
+			"name": "[NOAUTH] get section",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -41,7 +93,7 @@
 			"response": []
 		},
 		{
-			"name": "section subsections list",
+			"name": "[NOAUTH] section subsections list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -60,7 +112,7 @@
 			"response": []
 		},
 		{
-			"name": "subsections list",
+			"name": "[NOAUTH] subsections list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -77,7 +129,7 @@
 			"response": []
 		},
 		{
-			"name": "get subsection",
+			"name": "[NOAUTH] get subsection",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -95,7 +147,7 @@
 			"response": []
 		},
 		{
-			"name": "subsection topics list",
+			"name": "[NOAUTH] subsection topics list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -114,7 +166,7 @@
 			"response": []
 		},
 		{
-			"name": "topics list",
+			"name": "[NOAUTH] topics list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -131,36 +183,36 @@
 			"response": []
 		},
 		{
-			"name": "get topic",
+			"name": "[NOAUTH] get topic",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/topic/1",
+					"raw": "{{host}}/topic/2",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"topic",
-						"1"
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "topic posts list",
+			"name": "[NOAUTH] topic posts list",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/topic/1/posts",
+					"raw": "{{host}}/topic/2/posts",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"topic",
-						"1",
+						"2",
 						"posts"
 					]
 				}
@@ -168,7 +220,7 @@
 			"response": []
 		},
 		{
-			"name": "posts list",
+			"name": "[NOAUTH] posts list",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -185,7 +237,7 @@
 			"response": []
 		},
 		{
-			"name": "get post",
+			"name": "[NOAUTH] get post",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -203,7 +255,7 @@
 			"response": []
 		},
 		{
-			"name": "get post user",
+			"name": "[NOAUTH] get post user",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -222,7 +274,7 @@
 			"response": []
 		},
 		{
-			"name": "get post topic",
+			"name": "[NOAUTH] get post topic",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -241,14 +293,14 @@
 			"response": []
 		},
 		{
-			"name": "create post",
+			"name": "[AUTH] create post",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "d2P2ANcwaWLtNImkAMuJhYo4ijdR29Wihrr2q11xsP9uECLu0kWlVDaamgmNiYUvkJ8hEEGmfPBrDm5eCVRzt6SHX5ygYQx",
 							"type": "string"
 						}
 					]
@@ -277,7 +329,43 @@
 			"response": []
 		},
 		{
-			"name": "edit post",
+			"name": "[AUTH] create topic",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "d2P2ANcwaWLtNImkAMuJhYo4ijdR29Wihrr2q11xsP9uECLu0kWlVDaamgmNiYUvkJ8hEEGmfPBrDm5eCVRzt6SHX5ygYQx",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subsection_id\": 1,\r\n    \"name\": \"LOL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/topic",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] edit post",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -314,7 +402,7 @@
 			"response": []
 		},
 		{
-			"name": "delete post",
+			"name": "[AUTH] delete post",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -351,59 +439,7 @@
 			"response": []
 		},
 		{
-			"name": "register success",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\",\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/register",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login success",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/login",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "logout",
+			"name": "[AUTH] logout",
 			"request": {
 				"auth": {
 					"type": "bearer",
