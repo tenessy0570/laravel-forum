@@ -19,3 +19,8 @@ or use database sql dump
 ```shell
 /database/DUMP.v.3.0.sql
 ```
+# Tests
+project has postman test collection and environment json files:<br>
+```shell
+/tests/postman collection/
+```
