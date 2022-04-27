@@ -59,4 +59,11 @@ class Handler extends ExceptionHandler
             'error' => $message
         ], 404);
     }
+
+    public static function raise200_ok()
+    {
+        return response()->json([
+            'success' => 'true'
+        ], 200);
+    }
 }

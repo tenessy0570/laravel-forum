@@ -43,5 +43,6 @@ Route::group(['middleware' => 'auth.api'], function() {
     Route::post('/topic', [TopicController::class, 'create']);
     Route::patch('/post/{id}', [PostController::class, 'edit']);
     Route::delete('/post/{id}', [PostController::class, 'delete']);
+    Route::delete('/topic/{id}', [TopicController::class, 'delete']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

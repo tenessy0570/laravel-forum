@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('token', 255);
             $table->timestamps();
+            $table->boolean('is_staff')->default(false);
         });
     }
 

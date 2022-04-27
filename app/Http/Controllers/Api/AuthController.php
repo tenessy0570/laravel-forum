@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Exceptions\Handler;
+
 
 class AuthController extends Controller
 {
@@ -75,8 +77,6 @@ class AuthController extends Controller
         $user->token = '';
         $user->save();
 
-        return response()->json([
-            'success' => true
-        ], 200);
+        return Handler::raise200_ok();
     }
 }

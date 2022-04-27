@@ -81,14 +81,17 @@ class PostController extends Controller
             return Handler::raise404();
         }
 
+        if (request()->user->is_staff) {
+            $post->delete();
+            return Handler::raise200_ok();
+        }
+
         if ($post->user_id !== request()->user->id) {
             return Handler::raise403();
         }
         
         $post->delete();
-        return response()->json([
-            'success' => 'true'
-        ], 200);
+        return Handler::raise200_ok();
     }
 
     /**

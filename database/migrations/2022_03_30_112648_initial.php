@@ -21,14 +21,23 @@ return new class extends Migration
         Schema::create('subsections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('section_id')->constrained();
+            $table->foreignId('section_id')
+                    ->constrained()
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
 
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('subsection_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('subsection_id')
+                    ->constrained()
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreignId('user_id')
+                    ->constrained()
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->timestamps();
         });
 
@@ -36,9 +45,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content');
-            $table->foreignId('topic_id')->constrained();
+            $table->foreignId('topic_id')
+                    ->constrained()
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
             $table->timestamps();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')
+                    ->constrained()
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
     }
 

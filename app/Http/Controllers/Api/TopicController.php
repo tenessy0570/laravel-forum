@@ -98,8 +98,15 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        if (!request()->user->is_staff) return Handler::raise403();
+
+        $topic = Topic::find($id);
+
+        if (!$topic) return Handler::raise404();
+
+        $topic->delete();
+        return Handler::raise200_ok();
     }
 }

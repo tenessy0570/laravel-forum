@@ -1,18 +1,29 @@
 {
 	"info": {
-		"_postman_id": "f2118ff6-94c6-4a9b-92c0-5d91015c50c5",
+		"_postman_id": "2c983b13-095d-4ccd-9271-9ba8ca2622d8",
 		"name": "kursach",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "[NOAUTH] register success",
+			"name": "[NOAUTH] register user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\",\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"raw": "{\r\n    \"name\": \"user\",\r\n    \"email\": \"user@user.user\",\r\n    \"password\": \"user\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -32,13 +43,54 @@
 			"response": []
 		},
 		{
-			"name": "[NOAUTH] login success",
+			"name": "[NOAUTH] register staff",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
+					"raw": "{\r\n    \"name\": \"staff\",\r\n    \"email\": \"staff@staff.staff\",\r\n    \"password\": \"staff\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] login user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('user_token', JSON.parse(responseBody).token);\r",
+							"\r",
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user@user.user\",\r\n    \"password\": \"user\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,54 +110,41 @@
 			"response": []
 		},
 		{
-			"name": "[NOAUTH] sections list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/sections",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"sections"
-					]
+			"name": "[NOAUTH] login staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('staff_token', JSON.parse(responseBody).token);\r",
+							"\r",
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] get section",
+			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"staff@staff.staff\",\r\n    \"password\": \"staff\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{host}}/section/1",
+					"raw": "{{host}}/login",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"section",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] section subsections list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/section/1/subsections",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"section",
-						"1",
-						"subsections"
+						"login"
 					]
 				}
 			},
@@ -113,6 +152,25 @@
 		},
 		{
 			"name": "[NOAUTH] subsections list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"body = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('subsection_1', body[0].id);\r",
+							"pm.environment.set('subsection_2', body[1].id);\r",
+							"pm.environment.set('subsection_3', body[2].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -129,214 +187,27 @@
 			"response": []
 		},
 		{
-			"name": "[NOAUTH] get subsection",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/subsection/3",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"subsection",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] subsection topics list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/subsection/2/topics",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"subsection",
-						"2",
-						"topics"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] topics list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/topics",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"topics"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] get topic",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/topic/2",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"topic",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] topic posts list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/topic/2/posts",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"topic",
-						"2",
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] posts list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/posts",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] get post",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/post/1",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"post",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] get post user",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/post/3/user",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"post",
-						"3",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[NOAUTH] get post topic",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/post/1/topic",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"post",
-						"1",
-						"topic"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "[AUTH] create post",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "d2P2ANcwaWLtNImkAMuJhYo4ijdR29Wihrr2q11xsP9uECLu0kWlVDaamgmNiYUvkJ8hEEGmfPBrDm5eCVRzt6SHX5ygYQx",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"topic_id\": 1,\r\n    \"name\": \"LOL\",\r\n    \"content\": \"CONTENT\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/post",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"post"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "[AUTH] create topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "d2P2ANcwaWLtNImkAMuJhYo4ijdR29Wihrr2q11xsP9uECLu0kWlVDaamgmNiYUvkJ8hEEGmfPBrDm5eCVRzt6SHX5ygYQx",
+							"value": "{{staff_token}}",
 							"type": "string"
 						}
 					]
@@ -345,7 +216,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"subsection_id\": 1,\r\n    \"name\": \"LOL\"\r\n}",
+					"raw": "{\r\n    \"subsection_id\": {{subsection_1}},\r\n    \"name\": \"topic1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -365,14 +236,386 @@
 			"response": []
 		},
 		{
-			"name": "[AUTH] edit post",
+			"name": "[AUTH] create topic Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ekjMmWdIc43NJcONIgUmxfbPKWYo0vfsSOD3u54d02OgeTY2ACzkEKh3dcX2hG3Ai1tN6lEwYcGqM9AsWlh3zv3DmtZqDsZ",
+							"value": "{{staff_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subsection_id\": {{subsection_2}},\r\n    \"name\": \"topic2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/topic",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] create topic Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{staff_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subsection_id\": {{subsection_3}},\r\n    \"name\": \"topic3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/topic",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] topics list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"body = JSON.parse(responseBody);\r",
+							"pm.environment.set('topic_1', body[0].id);\r",
+							"pm.environment.set('topic_2', body[1].id);\r",
+							"pm.environment.set('topic_3', body[2].id);\r",
+							"\r",
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topics",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] create post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"topic_id\": {{topic_1}},\r\n    \"name\": \"user post1\",\r\n    \"content\": \"CONTENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] create post Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"topic_id\": {{topic_2}},\r\n    \"name\": \"user post2\",\r\n    \"content\": \"CONTENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] create post Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 201', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"topic_id\": {{topic_3}},\r\n    \"name\": \"user post3\",\r\n    \"content\": \"CONTENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] posts list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"body = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('post_1', body[0].id);\r",
+							"pm.environment.set('post_2', body[1].id);\r",
+							"pm.environment.set('post_3', body[2].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/posts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH/STAFF] delete post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('post_1', null);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{staff_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{post_1}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{post_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] edit post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
 							"type": "string"
 						}
 					]
@@ -389,79 +632,447 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/post/10",
+					"raw": "{{host}}/post/{{post_2}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"post",
-						"10"
+						"{{post_2}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "[AUTH] delete post",
+			"name": "[NOAUTH] sections list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('section_1', JSON.parse(responseBody)[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/sections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"sections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get section",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/section/{{section_1}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"section",
+						"{{section_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] section subsections list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/section/{{section_1}}/subsections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"section",
+						"{{section_1}}",
+						"subsections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get subsection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/subsection/{{subsection_1}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"subsection",
+						"{{subsection_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] subsection topics list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/subsection/{{subsection_1}}/topics",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"subsection",
+						"{{subsection_1}}",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topic/{{topic_1}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic",
+						"{{topic_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] topic posts list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/topic/{{topic_1}}/posts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"topic",
+						"{{topic_1}}",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{post_2}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{post_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get post user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{post_2}}/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{post_2}}",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[NOAUTH] get post topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{post_2}}/topic",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{post_2}}",
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[STAFF] delete topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "JW7FL6Zq5Yt0uhGSbNcgyzEPv04SJMlLwKO8OVzkZpNx9BSpN8OedDEwVBcEQyQUgpQ6OCUGPoKCRuaNGKmsemIyVLqJMfA",
+							"value": "{{staff_token}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"topic_id\": 1,\r\n    \"name\": \"LOL\",\r\n    \"content\": \"CONTENT\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{host}}/post/62",
+					"raw": "{{host}}/topic/{{topic_1}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"post",
-						"62"
+						"topic",
+						"{{topic_1}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "[AUTH] logout",
+			"name": "[AUTH] logout user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('user_token', null);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ekjMmWdIc43NJcONIgUmxfbPKWYo0vfsSOD3u54d02OgeTY2ACzkEKh3dcX2hG3Ai1tN6lEwYcGqM9AsWlh3zv3DmtZqDsZ",
+							"value": "{{user_token}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"test3@gmail.com\",\r\n    \"password\": \"tested\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
+				"url": {
+					"raw": "{{host}}/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[AUTH] logout staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('code is 200', () => {\r",
+							"    pm.expect(pm.response.code).to.be.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.environment.set('staff_token', null);"
+						],
+						"type": "text/javascript"
 					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{staff_token}}",
+							"type": "string"
+						}
+					]
 				},
+				"method": "POST",
+				"header": [],
 				"url": {
 					"raw": "{{host}}/logout",
 					"host": [
